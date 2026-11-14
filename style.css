@@ -1,0 +1,233 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #fff9f5;
+  font-family: "Nunito", sans-serif;
+  background-image:
+    radial-gradient(rgba(251, 113, 133, 0.08) 1px, transparent 0),
+    radial-gradient(rgba(254, 205, 211, 0.16) 1px, transparent 0);
+  overflow-x: hidden;
+}
+
+.Nav-container {
+  border: solid 1px black;
+  display: flex;
+  padding: 10px;
+}
+
+.Nav-div {
+  border: solid 1px pink;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  gap: 5px;
+}
+
+.Nav-div span {
+  color: rgb(243, 99, 123);
+  font-weight: bold;
+}
+
+.Nav-div svg {
+  color: pink;
+  stroke: pink;
+  fill: pink;
+  filter: drop-shadow(0 0 2px rgba(245, 6, 125, 0.8));
+}
+
+.main-container {
+  border: red 1px solid;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 10px;
+  padding: 20px;
+  background-color: white;
+}
+.pocket {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  background-color: #ffeced;
+  border-radius: 50px;
+  width: 35%;
+  padding: 8px;
+  gap: 8px;
+  justify-self: center;
+  font-weight: bold;
+}
+.pocket svg {
+  height: 15px;
+  width: 15px;
+  color: gold;
+  fill: gold;
+  stroke: currentColor;
+  stroke-width: 1px;
+  box-shadow: 0 0 15px rgba(241, 237, 2, 0.35);
+}
+
+.main-header {
+  border: solid 1px black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+}
+.main-header h1 {
+  font-size: 50px;
+  color: #4a3f3d;
+}
+
+.main-header h1 svg {
+  fill: pink;
+  height: 40px;
+  width: 40px;
+  filter: drop-shadow(0 0 4px rgba(245, 6, 125, 0.8));
+  animation: float 1s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.hug-container {
+  width: fit-content;
+  box-sizing: border-box;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+}
+
+.hug-container button {
+  height: 70px;
+  width: 100%;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.love-meter {
+  flex: 1;
+  width:fit-content;
+  border: 1px solid pink;
+  border-radius: 20px;
+  height: 70px;
+  padding: 10px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  gap: 15px;
+
+  box-sizing: border-box;
+  font-size: 10px;
+
+  box-shadow:inset 0 0 15px rgba(239, 147, 147, 0.2);
+}
+
+.Infinity-hug {
+  flex: 2;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 5px;
+  
+}
+.Infinity-hug h3 {
+  white-space: nowrap;
+  color:pink;
+}
+
+.Infinity-hug span {
+  font-size: 10px;
+  font-weight: bold;
+}
+.Infinity-hug svg {
+  height: 15px;
+  width: 15px;
+}
+
+.vertical-line {
+  width: 1px;
+  height: 50px;
+  background-color: #f3b6c1;
+}
+
+.hug-sent {
+  flex: 1;
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+}
+
+.hug-sent h3 {
+  white-space: nowrap;
+}
+.hug-sent svg{
+    height:18px;
+    width:18px;
+}
+
+
+.emergencyhug {
+  flex: 1;
+  height: 70px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: none;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: bold;
+  background-color: #fb7185;
+  color: white;
+  cursor: pointer;
+  white-space: nowrap;
+ transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.emergencyhug:hover {
+  background-color: #e11d48;
+  transform: scale(1.05) translateY(-3px);
+  box-shadow: 0 5px 15px rgba(255, 105, 135, 0.3);
+  
+}
+
+.subtxt-header{
+    border:solid 2px rgb(239, 246, 32);
+    background-color: rgb(244, 246, 196) ;
+    height: 40px;
+    display:flex;
+    justify-content: center;
+    align-items:Center;
+    padding:10px;
+    border-radius:20px;
+}
+
+
