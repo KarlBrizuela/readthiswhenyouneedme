@@ -258,3 +258,41 @@ body {
     opacity: 0;
   }
 }
+
+.hug-modal{
+  position:fixed;
+  display:flex;
+  justify-content: center;
+  align-items:center;
+  z-index:999;
+ 
+}
+
+.hugmodal-content {
+  position: relative;
+  width: 400px;
+  padding: 30px;
+
+  background-color: #fff9f5;
+  border: 2px solid pink;
+  border-radius: 20px;
+
+  box-sizing: border-box;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+
+  display:flex;
+
+  align-items:center;
+  justify-content:center;
+}
+
+#hugclose {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+
+  border: none;
+  background: none;
+  font-size: 20px;
+  cursor: pointer;
+}
