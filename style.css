@@ -13,7 +13,6 @@ body {
 }
 
 .Nav-container {
-  border: solid 1px black;
   display: flex;
   padding: 10px;
 }
@@ -242,6 +241,8 @@ body {
   pointer-events: none;
     font-size: 18px;
   animation: explode 1s ease-out forwards;
+    will-change: transform, opacity;
+  z-index:1001;
 }
 
 @keyframes explode {
@@ -261,10 +262,11 @@ body {
 
 .hug-modal{
   position:fixed;
-  display:flex;
+  display:none;
   justify-content: center;
   align-items:center;
-  z-index:999;
+  z-index:2;
+  inset:0;
  
 }
 
@@ -290,9 +292,91 @@ body {
   position: absolute;
   top: 10px;
   right: 10px;
-
   border: none;
   background: none;
   font-size: 20px;
   cursor: pointer;
+}
+
+.hugmodaltxt{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  gap: 12px;
+}
+
+.tenor-gif-embed {
+  max-width: 180px;
+  width: 100%;
+  object-fit: contain;
+}
+
+.hug-modal.active{
+  display:flex;
+}
+
+.hugmodalbuttons{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    border-radius:10px;
+    width:auto;
+}
+
+.hugmodalbuttons button{
+  padding:4px;
+  border: none;
+  border-radius: 50px;
+  color: white;
+  font-family: "Nunito", sans-serif;
+  font-weight: bold;
+  cursor: pointer;
+ height:50px;
+}
+
+#anothersqueeze{
+  background-color:#fb7185;
+  padding:5px;
+  width:90%;
+}
+
+#anothersqueeze:hover{
+  background-color:#e11d48;
+}
+
+
+#oknow{
+  color:black;
+  width:70%;
+}
+
+#oknow:hover{
+  background-color: pink;
+}
+
+
+.hug{
+  position:absolute;
+  pointer-events: none;
+    font-size: 18px;
+  animation: fireworks 1s ease-out forwards;
+    will-change: transform, opacity;
+  z-index:1001;
+}
+
+@keyframes fireworks {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translate(
+      calc(-50% + var(--hor)),
+      calc(-50% + var(--ver))
+    ) scale(1.5);
+    opacity: 0;
+  }
 }
