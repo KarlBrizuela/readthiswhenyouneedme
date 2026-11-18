@@ -6,6 +6,7 @@ const hugclose = document.getElementById("hugclose");
 const hugmodal = document.getElementById("hugmodal");
 const oknow = document.getElementById("oknow");
 const anothersqueeze = document.getElementById("anothersqueeze");
+const envelopecontainer = document.querySelector("#envelopeContainer");
 
 let count = 0;
 
@@ -54,7 +55,7 @@ anothersqueeze.addEventListener("click", () => {
   count++;
   hugcount.textContent = count;
 
-  
+
   const hugicons = ["💕", "✨", "💗", "🌸", "💖", "⭐"];
 
   for (let k = 0; k < 20; k++) {
@@ -79,3 +80,61 @@ anothersqueeze.addEventListener("click", () => {
    });
   }
 });
+
+
+const loadEnvelopes = async () => {
+
+    try{
+   const response = await  fetch("./data/letters.json");
+
+    if(!response.ok){
+      throw new Error("failed to load letters.");
+    }
+
+    const letters = await response.json();
+
+      envelopecontainer.innerHTML = "";
+    
+    letters.forEach((letter) => {
+    
+      const envelopedCard = document.createElement("div");
+
+      envelopedCard.classList.add("#envelop-card");
+
+      envelopedCard.style.background = letter.color;
+
+      envelopedCard.innerHTML = `
+       <div class="envelope-emoji">
+        ${letter.emoji}
+       </div>
+
+       <div class="envelope-icon">
+                    💌
+                </div>
+
+                <h3>${letter.category}</h3>
+
+                <p>${letter.title}</p>
+
+                <span class="envelope-label">
+                    Open Me
+                </span>
+      
+      `;
+
+       envelopecontainer.appendChild(envelopedCard);
+
+    });
+    
+
+
+    }
+    catch(error){
+      console.error("Envelope Error: ", error);
+    }
+
+
+
+}
+
+loadEnvelopes();
