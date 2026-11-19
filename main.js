@@ -1,4 +1,6 @@
+
 lucide.createIcons();
+
 
 const hugcount = document.getElementById("hug-count");
 const emergencyhug = document.querySelector(".emergencyhug");
@@ -6,135 +8,342 @@ const hugclose = document.getElementById("hugclose");
 const hugmodal = document.getElementById("hugmodal");
 const oknow = document.getElementById("oknow");
 const anothersqueeze = document.getElementById("anothersqueeze");
+
+
 const envelopecontainer = document.querySelector("#envelopeContainer");
+
+
+const letterEmoji = document.getElementById("letterEmoji");
+const letterCategory = document.getElementById("letterCategory");
+const letterTitle = document.getElementById("letterTitle");
+const letterBody = document.getElementById("letterBody");
+
+const letterModal = document.getElementById("letterModal");
+const letterClose = document.getElementById("letterClose");
+
+
+const envelopeSearch = document.getElementById("envelopeSearch");
+const envelopeFilters = document.getElementById("envelopeFilters");
+const envelopeCount = document.getElementById("envelopeCount");
+const clearSearch = document.getElementById("clearSearch");
+const resetFilters = document.getElementById("resetFilters");
+
+
+
 
 let count = 0;
 
+let allLetters = [];
+
+let activeFilter = "all";
+
+
+
+const createHugParticles = (element, particleClass, xProperty, yProperty) => {
+
+    const icons = ["💕", "✨", "💗", "🌸", "💖", "⭐"];
+
+    for (let i = 0; i < 20; i++) {
+
+        const particle = document.createElement("span");
+
+        particle.classList.add(particleClass);
+
+        particle.textContent =
+            icons[Math.floor(Math.random() * icons.length)];
+
+        const angle = Math.random() * Math.PI * 2;
+        const distance = Math.random() * 120 + 50;
+
+        const x = Math.cos(angle) * distance;
+        const y = Math.sin(angle) * distance;
+
+        particle.style.setProperty(xProperty, `${x}px`);
+        particle.style.setProperty(yProperty, `${y}px`);
+
+        element.appendChild(particle);
+
+        particle.addEventListener("animationend", () => {
+            particle.remove();
+        });
+    }
+};
+
+
+
 emergencyhug.addEventListener("click", () => {
-  hugmodal.classList.add("active");
 
-  count++;
-  hugcount.textContent = count;
+    hugmodal.classList.add("active");
 
-  const icons = ["💕", "✨", "💗", "🌸", "💖", "⭐"];
+    count++;
 
-  for (let i = 0; i < 20; i++) {
-    const particle = document.createElement("span");
+    hugcount.textContent = count;
 
-    particle.classList.add("particle");
+    createHugParticles(
+        emergencyhug,
+        "particle",
+        "--x",
+        "--y"
+    );
 
-    particle.textContent = icons[Math.floor(Math.random() * icons.length)];
-
-    const angle = Math.random() * Math.PI * 2;
-    const distance = Math.random() * 120 + 50;
-
-    const x = Math.cos(angle) * distance;
-    const y = Math.sin(angle) * distance;
-
-    particle.style.setProperty("--x", `${x}px`);
-    particle.style.setProperty("--y", `${y}px`);
-
-    emergencyhug.appendChild(particle);
-
-    particle.addEventListener("animationend", () => {
-      particle.remove();
-    });
-  }
 });
+
+
+
 
 hugclose.addEventListener("click", () => {
-  hugmodal.classList.remove("active");
+
+    hugmodal.classList.remove("active");
+
 });
 
+
 oknow.addEventListener("click", () => {
-  hugmodal.classList.remove("active");
+
+    hugmodal.classList.remove("active");
+
 });
+
+
+
 
 anothersqueeze.addEventListener("click", () => {
 
-  count++;
-  hugcount.textContent = count;
+    count++;
 
+    hugcount.textContent = count;
 
-  const hugicons = ["💕", "✨", "💗", "🌸", "💖", "⭐"];
+    createHugParticles(
+        anothersqueeze,
+        "hug",
+        "--hor",
+        "--ver"
+    );
 
-  for (let k = 0; k < 20; k++) {
-    const hug = document.createElement("span");
-
-    hug.classList.add("hug");
-    hug.textContent = hugicons[Math.floor(Math.random() * hugicons.length)];
-
-    const angulo = Math.random() * Math.PI * 2;
-    const distansya = Math.random() * 120 + 50;
-
-    const hor = Math.cos(angulo) * distansya;
-    const ver = Math.sin(angulo) * distansya;
-
-    hug.style.setProperty("--hor", `${hor}px`);
-    hug.style.setProperty("--ver", `${ver}px`);
-
-    anothersqueeze.appendChild(hug);
-
-    hug.addEventListener("animationend", () => {
-      hug.remove();
-   });
-  }
 });
+
+
 
 
 const loadEnvelopes = async () => {
 
-    try{
-   const response = await  fetch("./data/letters.json");
+    try {
 
-    if(!response.ok){
-      throw new Error("failed to load letters.");
+        const response = await fetch("./data/letters.json");
+
+        if (!response.ok) {
+            throw new Error("Failed to load letters.");
+        }
+
+        allLetters = await response.json();
+
+        renderEnvelopes();
+
+    } catch (error) {
+
+        console.error("Envelope Error:", error);
+
+        envelopecontainer.innerHTML = `
+            <div class="no-envelopes">
+                <span>💔</span>
+                <h3>Something went wrong</h3>
+                <p>Unable to load your letters. Please try again.</p>
+            </div>
+        `;
+
     }
 
-    const letters = await response.json();
+};
 
-      envelopecontainer.innerHTML = "";
-    
-    letters.forEach((letter) => {
-    
-      const envelopedCard = document.createElement("div");
 
-      envelopedCard.classList.add("#envelop-card");
 
-      envelopedCard.style.background = letter.color;
 
-      envelopedCard.innerHTML = `
-       <div class="envelope-emoji">
-        ${letter.emoji}
-       </div>
+const renderEnvelopes = () => {
 
-       <div class="envelope-icon">
-                    💌
-                </div>
+    const searchValue = envelopeSearch.value
+        .toLowerCase()
+        .trim();
 
-                <h3>${letter.category}</h3>
+   
+    const filteredLetters = allLetters.filter((letter) => {
 
-                <p>${letter.title}</p>
+        const category = letter.category.toLowerCase();
+        const title = letter.title.toLowerCase();
+        const message = letter.message.toLowerCase();
 
-                <span class="envelope-label">
-                    Open Me
-                </span>
-      
-      `;
+        
+        const matchesSearch =
+            category.includes(searchValue) ||
+            title.includes(searchValue) ||
+            message.includes(searchValue);
 
-       envelopecontainer.appendChild(envelopedCard);
+        
+        const matchesCategory =
+            activeFilter === "all" ||
+            category === activeFilter.toLowerCase();
+
+        return matchesSearch && matchesCategory;
 
     });
+
+
     
+    envelopecontainer.innerHTML = "";
 
+
+    
+    envelopeCount.textContent =
+        `Showing ${filteredLetters.length} of ${allLetters.length} Letters`;
+
+
+    // EMPTY STATE
+    if (filteredLetters.length === 0) {
+
+        envelopecontainer.innerHTML = `
+            <div class="no-envelopes">
+                <span>💌</span>
+                <h3>No letters found</h3>
+                <p>Maybe try searching for something else?</p>
+            </div>
+        `;
+
+        return;
 
     }
-    catch(error){
-      console.error("Envelope Error: ", error);
-    }
+
+
+    
+    filteredLetters.forEach((letter) => {
+
+        const envelopedCard = document.createElement("div");
+
+        envelopedCard.classList.add("envelope-card");
+
+        envelopedCard.style.background = letter.color;
+
+        envelopedCard.innerHTML = `
+            <div class="envelope-emoji">
+                ${letter.emoji}
+            </div>
+
+            <div class="envelope-icon">
+                💌
+            </div>
+
+            <h3>${letter.category}</h3>
+
+            <p>${letter.title}</p>
+
+            <span class="envelope-label">
+                Open Me
+            </span>
+        `;
+
+
+        // OPEN LETTER MODAL
+        envelopedCard.addEventListener("click", () => {
+
+            letterEmoji.textContent = letter.emoji;
+
+            letterCategory.textContent = letter.category;
+
+            letterTitle.textContent = letter.title;
+
+            letterBody.textContent = letter.message;
+
+            letterModal.classList.add("active");
+
+        });
+
+
+        envelopecontainer.appendChild(envelopedCard);
+
+    });
+
+};
 
 
 
-}
+
+envelopeSearch.addEventListener("input", () => {
+
+    renderEnvelopes();
+
+});
+
+
+
+
+envelopeFilters.addEventListener("click", (event) => {
+
+    const button = event.target.closest(".filter-btn");
+
+    if (!button) return;
+
+    activeFilter = button.dataset.filter.toLowerCase();
+
+
+    
+    document.querySelectorAll(".filter-btn").forEach((btn) => {
+
+        btn.classList.remove("active");
+
+    });
+
+
+    
+    button.classList.add("active");
+
+
+    
+    renderEnvelopes();
+
+});
+
+
+
+
+clearSearch.addEventListener("click", () => {
+
+    envelopeSearch.value = "";
+
+    renderEnvelopes();
+
+});
+
+
+
+resetFilters.addEventListener("click", () => {
+
+    envelopeSearch.value = "";
+
+    activeFilter = "all";
+
+
+    
+    document.querySelectorAll(".filter-btn").forEach((btn) => {
+
+        btn.classList.toggle(
+            "active",
+            btn.dataset.filter === "all"
+        );
+
+    });
+
+
+    renderEnvelopes();
+
+});
+
+
+
+
+letterClose.addEventListener("click", () => {
+
+    letterModal.classList.remove("active");
+
+});
+
+
 
 loadEnvelopes();
