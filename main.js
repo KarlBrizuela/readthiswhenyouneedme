@@ -12,7 +12,7 @@ const anothersqueeze = document.getElementById("anothersqueeze");
 
 const envelopecontainer = document.querySelector("#envelopeContainer");
 
-
+const letterimage = document.getElementById("letterimage");
 const letterEmoji = document.getElementById("letterEmoji");
 const letterCategory = document.getElementById("letterCategory");
 const letterTitle = document.getElementById("letterTitle");
@@ -196,7 +196,7 @@ const renderEnvelopes = () => {
         `Showing ${filteredLetters.length} of ${allLetters.length} Letters`;
 
 
-    // EMPTY STATE
+   
     if (filteredLetters.length === 0) {
 
         envelopecontainer.innerHTML = `
@@ -240,10 +240,10 @@ const renderEnvelopes = () => {
         `;
 
 
-        // OPEN LETTER MODAL
+       
         envelopedCard.addEventListener("click", () => {
 
-            letterEmoji.textContent = letter.emoji;
+            letterimage.textContent = letter.image;
 
             letterCategory.textContent = letter.category;
 
