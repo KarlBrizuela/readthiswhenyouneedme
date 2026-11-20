@@ -2,13 +2,13 @@
 lucide.createIcons();
 
 
+
 const hugcount = document.getElementById("hug-count");
 const emergencyhug = document.querySelector(".emergencyhug");
 const hugclose = document.getElementById("hugclose");
 const hugmodal = document.getElementById("hugmodal");
 const oknow = document.getElementById("oknow");
 const anothersqueeze = document.getElementById("anothersqueeze");
-
 
 const envelopecontainer = document.querySelector("#envelopeContainer");
 
@@ -20,7 +20,6 @@ const letterBody = document.getElementById("letterBody");
 
 const letterModal = document.getElementById("letterModal");
 const letterClose = document.getElementById("letterClose");
-
 
 const envelopeSearch = document.getElementById("envelopeSearch");
 const envelopeFilters = document.getElementById("envelopeFilters");
@@ -36,6 +35,36 @@ let count = 0;
 let allLetters = [];
 
 let activeFilter = "all";
+
+
+
+
+const backgroundMusic = new Audio();
+
+backgroundMusic.loop = true;
+backgroundMusic.volume = 0.3;
+
+const playLetterMusic = (musicPath) => {
+
+    backgroundMusic.pause();
+    backgroundMusic.currentTime = 0;
+
+    backgroundMusic.src = musicPath;
+    backgroundMusic.load();
+
+    backgroundMusic.play().catch((error) => {
+        console.error("Unable to play music:", error);
+    });
+
+};
+
+const stopLetterMusic = () => {
+
+    backgroundMusic.pause();
+    backgroundMusic.currentTime = 0;
+
+};
+
 
 
 
@@ -66,8 +95,11 @@ const createHugParticles = (element, particleClass, xProperty, yProperty) => {
         particle.addEventListener("animationend", () => {
             particle.remove();
         });
+
     }
+
 };
+
 
 
 
@@ -89,8 +121,6 @@ emergencyhug.addEventListener("click", () => {
 });
 
 
-
-
 hugclose.addEventListener("click", () => {
 
     hugmodal.classList.remove("active");
@@ -103,8 +133,6 @@ oknow.addEventListener("click", () => {
     hugmodal.classList.remove("active");
 
 });
-
-
 
 
 anothersqueeze.addEventListener("click", () => {
@@ -164,20 +192,20 @@ const renderEnvelopes = () => {
         .toLowerCase()
         .trim();
 
-   
+
     const filteredLetters = allLetters.filter((letter) => {
 
         const category = letter.category.toLowerCase();
         const title = letter.title.toLowerCase();
         const message = letter.message.toLowerCase();
 
-        
+
         const matchesSearch =
             category.includes(searchValue) ||
             title.includes(searchValue) ||
             message.includes(searchValue);
 
-        
+
         const matchesCategory =
             activeFilter === "all" ||
             category === activeFilter.toLowerCase();
@@ -187,16 +215,13 @@ const renderEnvelopes = () => {
     });
 
 
-    
     envelopecontainer.innerHTML = "";
 
 
-    
     envelopeCount.textContent =
         `Showing ${filteredLetters.length} of ${allLetters.length} Letters`;
 
 
-   
     if (filteredLetters.length === 0) {
 
         envelopecontainer.innerHTML = `
@@ -212,7 +237,6 @@ const renderEnvelopes = () => {
     }
 
 
-    
     filteredLetters.forEach((letter) => {
 
         const envelopedCard = document.createElement("div");
@@ -240,18 +264,39 @@ const renderEnvelopes = () => {
         `;
 
 
-       
+        
+
         envelopedCard.addEventListener("click", () => {
 
-            letterimage.textContent = letter.image;
+           
 
-            letterCategory.textContent = letter.category;
+            letterimage.src = letter.image;
+
+            // letterEmoji.textContent = letter.emoji;
+
+            // letterCategory.textContent = letter.category;
 
             letterTitle.textContent = letter.title;
 
             letterBody.textContent = letter.message;
 
+
+          
+
             letterModal.classList.add("active");
+
+
+            
+
+            if (letter.music) {
+
+                playLetterMusic(letter.music);
+
+            } else {
+
+                stopLetterMusic();
+
+            }
 
         });
 
@@ -261,7 +306,6 @@ const renderEnvelopes = () => {
     });
 
 };
-
 
 
 
@@ -283,7 +327,6 @@ envelopeFilters.addEventListener("click", (event) => {
     activeFilter = button.dataset.filter.toLowerCase();
 
 
-    
     document.querySelectorAll(".filter-btn").forEach((btn) => {
 
         btn.classList.remove("active");
@@ -291,11 +334,9 @@ envelopeFilters.addEventListener("click", (event) => {
     });
 
 
-    
     button.classList.add("active");
 
 
-    
     renderEnvelopes();
 
 });
@@ -313,6 +354,7 @@ clearSearch.addEventListener("click", () => {
 
 
 
+
 resetFilters.addEventListener("click", () => {
 
     envelopeSearch.value = "";
@@ -320,7 +362,6 @@ resetFilters.addEventListener("click", () => {
     activeFilter = "all";
 
 
-    
     document.querySelectorAll(".filter-btn").forEach((btn) => {
 
         btn.classList.toggle(
@@ -342,7 +383,10 @@ letterClose.addEventListener("click", () => {
 
     letterModal.classList.remove("active");
 
+    stopLetterMusic();
+
 });
+
 
 
 

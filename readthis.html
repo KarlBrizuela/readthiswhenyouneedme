@@ -87,62 +87,56 @@
     </div>
 
     <section class="envelope-section">
-      
       <div class="envelope-toolbar">
+        <div class="envelope-search">
+          <i data-lucide="search"></i>
 
-    
-    <div class="envelope-search">
-        <i data-lucide="search"></i>
-
-        <input
+          <input
             type="text"
             id="envelopeSearch"
             placeholder="Search your letters..."
-        />
+          />
 
-        <button id="clearSearch" type="button">
+          <button id="clearSearch" type="button">
             <i data-lucide="x"></i>
-        </button>
-    </div>
+          </button>
+        </div>
 
-    
-    <div class="envelope-filters" id="envelopeFilters">
-        <button class="filter-btn active" data-filter="all">
-            All
-        </button>
-    </div>
+        <div class="envelope-filters" id="envelopeFilters">
+          <button class="filter-btn active" data-filter="all">All</button>
+        </div>
 
-    
-    <div class="envelope-results">
-        <span id="envelopeCount">0 letters</span>
+        <div class="envelope-results">
+          <span id="envelopeCount">0 letters</span>
 
-        <button id="resetFilters">
+          <button id="resetFilters">
             <i data-lucide="rotate-ccw"></i>
             Reset
-        </button>
-    </div>
+          </button>
+        </div>
+      </div>
 
-</div>
+      <div class="envelope-container" id="envelopeContainer"></div>
 
-      <div class="envelope-container" id="envelopeContainer">
-    
-</div>
+      <div class="letter-modal" id="letterModal">
+        <div class="letter-modal-content">
+          <button id="letterClose">×</button>
 
-<div class="letter-modal" id="letterModal">
-    <div class="letter-modal-content">
-        <button id="letterClose">×</button>
-         
+          <img
+            class="letter-image"
+            id="letterimage"
+            src=""
+            alt="Letter Image"
+          />
+          <div class="letter-emoji" id="letterEmoji"></div>
 
-        <div class="letter-image" id ="letterimage"></div>
-        <div class="letter-emoji" id="letterEmoji"></div>
+          <h2 id="letterCategory"></h2>
 
-        <h2 id="letterCategory"></h2>
+          <p id="letterTitle"></p>
 
-        <p id="letterTitle"></p>
-
-        <div class="letter-body" id="letterBody"></div>
-    </div>
-</div>
+          <div class="letter-body" id="letterBody"></div>
+        </div>
+      </div>
     </section>
   </body>
   <script src="https://unpkg.com/lucide@latest"></script>
